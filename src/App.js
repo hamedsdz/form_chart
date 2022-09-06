@@ -1,23 +1,22 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState } from 'react'
+
+// Pages
+import AddInfo from './pages/addInfo'
+import ShowChart from './pages/showChart'
 
 function App() {
+  const [page, setPage] = useState(localStorage.getItem('page') ? localStorage.getItem('page') : 0)
+
+  const changePageHandler = (newPage) => {
+    localStorage.setItem('page', newPage)
+    setPage(newPage && newPage ? 1 : newPage)
+  }
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      {
+        page ? <ShowChart changePage={changePageHandler} /> : <AddInfo changePage={changePageHandler} />
+      }
     </div>
   );
 }

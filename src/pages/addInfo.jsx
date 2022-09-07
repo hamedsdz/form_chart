@@ -171,7 +171,7 @@ const AddInfo = (props) => {
                   </thead>
                   <tbody>
                     {data.map((item, idx) => (
-                      <tr className="odd:bg-white even:bg-slate-50" key={idx}>
+                      <tr className="odd:bg-white even:bg-slate-50 text-center" key={idx}>
                         <td className="p-2">{item.firstName} {item.lastName}</td>
                         <td className="p-2">{item.age}</td>
                         <td className="p-2">{item.skill}</td>

@@ -1,4 +1,6 @@
+import { useState } from 'react'
 const AddInfo = (props) => {
+
   const SkillsList = [
     "Data structures and algorithms",
     "Database and SQL",
@@ -10,6 +12,16 @@ const AddInfo = (props) => {
     "Text editors",
     "Git version control"
   ]
+  const [currentData, setCurrentData] = useState({ firstName: '', lastName: '', age: '', skill: SkillsList[0] })
+  const [data, setData] = useState([])
+
+  const firstNameChangeHandler = (e) => { setCurrentData({ ...currentData, firstName: e.target.value }) }
+  const lastNameChangeHandler = (e) => { setCurrentData({ ...currentData, lastName: e.target.value }) }
+  const ageChangeHandler = (e) => { setCurrentData({ ...currentData, age: e.target.value }) }
+  const skillChangeHandler = (e) => { setCurrentData({ ...currentData, skill: e.target.value }) }
+
+  const submitButtonClickHandler = () => { console.log("Submit"); }
+
   return (
     <div className='bg-slate-300'>
       <div className="md:container md:mx-auto py-10 sm:my-0 h-screen p-3">
@@ -28,6 +40,8 @@ const AddInfo = (props) => {
                       id="first-name"
                       autoComplete="first-name"
                       className="mt-1 block w-full bg-slate-200 rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500  py-1 px-2 sm:text-sm"
+                      onChange={(e) => firstNameChangeHandler(e)}
+                      value={currentData.firstName}
                     />
                   </div>
 
@@ -41,6 +55,8 @@ const AddInfo = (props) => {
                       id="last-name"
                       autoComplete="family-name"
                       className="mt-1 block w-full bg-slate-200 rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500  py-1 px-2 sm:text-sm"
+                      onChange={(e) => lastNameChangeHandler(e)}
+                      value={currentData.lastName}
                     />
                   </div>
 
@@ -55,6 +71,8 @@ const AddInfo = (props) => {
                       autoComplete="Age"
                       min={0}
                       className="mt-1 block w-full bg-slate-200 rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500  py-1 px-2 sm:text-sm"
+                      onChange={(e) => ageChangeHandler(e)}
+                      value={currentData.age}
                     />
                   </div>
 
@@ -67,10 +85,13 @@ const AddInfo = (props) => {
                       name="skills"
                       autoComplete="skills"
                       className="mt-1 block w-full bg-slate-200 rounded-md border border-gray-300 bg-white py-1 px-2 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+                      onChange={(e) => skillChangeHandler(e)}
+                      value={currentData.skill}
                     >
-                      {SkillsList.map(skill => (<option value={skill}>{skill}</option>))}
+                      {SkillsList.map((skill, idx) => (<option value={skill} key={idx}>{skill}</option>))}
                     </select>
                   </div>
+
                 </div>
               </div>
               <div className="bg-gray-50 px-4 py-3 text-right sm:px-6">
@@ -85,44 +106,59 @@ const AddInfo = (props) => {
           </div>
           <div className="md:col-span-1 mt-4 md:px-4 sm:px-0">
             <table className="table-auto w-full overflow-hidden shadow sm:rounded-md">
-              <thead>
-                <tr className='bg-slate-200 border-b border-slate-400'>
-                  <th className="p-2">Name</th>
-                  <th className="p-2">Age</th>
-                  <th className="p-2">Skill</th>
-                  <th className="p-2">Action</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr className="odd:bg-white even:bg-slate-50">
-                  <td className="p-2">Hamed Sadeghzadeh</td>
-                  <td className="p-2">21</td>
-                  <td className="p-2">1961</td>
-                  <td className="py-2 text-center">
-                    <button
-                      type="button"
-                      className="inline-flex justify-center rounded-md border border-transparent bg-red-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 m-1"
-                    >
-                      Delete
-                    </button>
-                    <button
-                      type="button"
-                      className="inline-flex justify-center rounded-md border border-transparent bg-orange-400 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-300 focus:ring-offset-2 m-1"
-                    >
-                      Edit
-                    </button>
-                  </td>
-                </tr>
-              </tbody>
+              {data &&
+                data.length ?
+                <>
+                  <thead>
+                    <tr className='bg-slate-200 border-b border-slate-400'>
+                      <th className="p-2">Name</th>
+                      <th className="p-2">Age</th>
+                      <th className="p-2">Skill</th>
+                      <th className="p-2">Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {data.map((item, idx) => (
+                      <tr className="odd:bg-white even:bg-slate-50" key={idx}>
+                        <td className="p-2">{item.firstName} {item.lastName}</td>
+                        <td className="p-2">{item.age}</td>
+                        <td className="p-2">{item.skill}</td>
+                        <td className="py-2 text-center">
+                          <button
+                            type="button"
+                            className="inline-flex justify-center rounded-md border border-transparent bg-red-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 m-1"
+                          >
+                            Delete
+                          </button>
+                          <button
+                            type="button"
+                            className="inline-flex justify-center rounded-md border border-transparent bg-orange-400 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-300 focus:ring-offset-2 m-1"
+                          >
+                            Edit
+                          </button>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </>
+                :
+                <tbody>
+                  <tr className='bg-white text-center'>
+                    <td>
+                      <div className='my-6'>No Data Is Available</div>
+                    </td>
+                  </tr>
+                </tbody>
+              }
             </table>
           </div>
-          <div className="md:m-4 sm:m-0 text-right">
+          <div className="mt-4 md:px-4 sm:px-0 text-right">
             <button
               type="button"
               className="inline-flex justify-center rounded-md border border-transparent bg-rose-400 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-rose-500 focus:outline-none focus:ring-2 focus:ring-rose-300 focus:ring-offset-2"
               onClick={() => props.changePage(1)}
             >
-            Show Charts Page
+              Show Charts Page
             </button>
           </div>
         </div>

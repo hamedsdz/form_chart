@@ -12,9 +12,9 @@ const AddInfo = (props) => {
     "Text editors",
     "Git version control"
   ]
-  const [editMode, setEditMode] = useState(false)
+  const [editId, setEditId] = useState(-1)
   const [data, setData] = useState((localStorage.getItem('data')) && JSON.parse(localStorage.getItem('data')) ? JSON.parse(localStorage.getItem('data')) : [])
-  const dataTemplate = { id: data.length, firstName: '', lastName: '', age: '', skill: SkillsList[0] }
+  const dataTemplate = { firstName: '', lastName: '', age: '', skill: SkillsList[0] }
   const [currentData, setCurrentData] = useState(dataTemplate)
 
   const firstNameChangeHandler = (e) => { setCurrentData({ ...currentData, firstName: e.target.value }) }
@@ -44,17 +44,17 @@ const AddInfo = (props) => {
 
   const SaveData = (valid) => {
     if (valid) {
-      if (editMode) {
+      if (editId !== -1) {
         let newdata = [...data]
-        newdata[currentData.id] = currentData
+        newdata[editId] = currentData
         setData(newdata)
         localStorage.setItem('data', JSON.stringify(newdata))
-        setCurrentData({ ...dataTemplate, id: dataTemplate.id })
-        setEditMode(false)
+        setCurrentData({ ...dataTemplate })
+        setEditId(-1)
       } else {
         setData([...data, currentData])
         localStorage.setItem('data', JSON.stringify([...data, currentData]))
-        setCurrentData({ ...dataTemplate, id: dataTemplate.id + 1 })
+        setCurrentData({ ...dataTemplate })
       }
     } else {
       alert('Form Data Is Not Valid!')
@@ -62,8 +62,15 @@ const AddInfo = (props) => {
   }
 
   const editClickHandler = (id) => {
-    setEditMode(true)
+    setEditId(id)
     setCurrentData(data[id])
+  }
+
+  const deleteClickHandler = (id) => {
+    let newData = [...data]
+    newData.splice(id, 1)
+    setData(newData);
+    localStorage.setItem('data', JSON.stringify(newData))
   }
 
   return (
@@ -172,13 +179,14 @@ const AddInfo = (props) => {
                           <button
                             type="button"
                             className="inline-flex justify-center rounded-md border border-transparent bg-red-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 m-1"
+                            onClick={() => deleteClickHandler(idx)}
                           >
                             Delete
                           </button>
                           <button
                             type="button"
                             className="inline-flex justify-center rounded-md border border-transparent bg-orange-400 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-300 focus:ring-offset-2 m-1"
-                            onClick={() => editClickHandler(item.id)}
+                            onClick={() => editClickHandler(idx)}
                           >
                             Edit
                           </button>

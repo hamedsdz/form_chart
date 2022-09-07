@@ -75,7 +75,7 @@ const AddInfo = (props) => {
 
   return (
     <div className='bg-slate-300'>
-      <div className="md:container md:mx-auto py-10 sm:my-0 h-screen p-3">
+      <div className="md:container md:mx-auto py-10 sm:my-0 min-h-screen h-full p-3">
         <div className="flex-row gap-6 ">
           <div className="md:m-4 sm:m-0">
             <div className="overflow-hidden shadow sm:rounded-md">
@@ -206,7 +206,7 @@ const AddInfo = (props) => {
               }
             </table>
           </div>
-          <div className="mt-4 md:px-4 sm:px-0 text-right">
+          <div className="my-4 md:px-4 sm:px-0 text-right">
             <button
               type="button"
               className="inline-flex justify-center rounded-md border border-transparent bg-rose-400 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-rose-500 focus:outline-none focus:ring-2 focus:ring-rose-300 focus:ring-offset-2"

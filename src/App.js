@@ -5,7 +5,7 @@ import AddInfo from './pages/addInfo'
 import ShowChart from './pages/showChart'
 
 function App() {
-  const [page, setPage] = useState(localStorage.getItem('page') ? localStorage.getItem('page') : 0)
+  const [page, setPage] = useState(parseInt(localStorage.getItem('page')) && parseInt(localStorage.getItem('page')) ? 1 : 0)
 
   const changePageHandler = (newPage) => {
     localStorage.setItem('page', newPage)
@@ -15,7 +15,7 @@ function App() {
   return (
     <div className="App">
       {
-        page ? <ShowChart changePage={changePageHandler} /> : <AddInfo changePage={changePageHandler} />
+        page === 1 ? <ShowChart changePage={changePageHandler} /> : <AddInfo changePage={changePageHandler} />
       }
     </div>
   );

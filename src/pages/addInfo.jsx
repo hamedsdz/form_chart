@@ -12,9 +12,10 @@ const AddInfo = (props) => {
     "Text editors",
     "Git version control"
   ]
-  const dataTemplate = { firstName: '', lastName: '', age: '', skill: SkillsList[0] }
+  const [editMode, setEditMode] = useState(false)
+  const [data, setData] = useState((localStorage.getItem('data')) && JSON.parse(localStorage.getItem('data')) ? JSON.parse(localStorage.getItem('data')) : [])
+  const dataTemplate = { id: data.length, firstName: '', lastName: '', age: '', skill: SkillsList[0] }
   const [currentData, setCurrentData] = useState(dataTemplate)
-  const [data, setData] = useState((localStorage.getItem('data')) && JSON.parse(localStorage.getItem('data')) ?JSON.parse(localStorage.getItem('data')) : [])
 
   const firstNameChangeHandler = (e) => { setCurrentData({ ...currentData, firstName: e.target.value }) }
   const lastNameChangeHandler = (e) => { setCurrentData({ ...currentData, lastName: e.target.value }) }
@@ -39,14 +40,30 @@ const AddInfo = (props) => {
     }
   }
 
+
+
   const SaveData = (valid) => {
     if (valid) {
-      setData([...data, currentData])
-      localStorage.setItem('data', JSON.stringify([...data, currentData]))
-      setCurrentData(dataTemplate)
+      if (editMode) {
+        let newdata = [...data]
+        newdata[currentData.id] = currentData
+        setData(newdata)
+        localStorage.setItem('data', JSON.stringify(newdata))
+        setCurrentData({ ...dataTemplate, id: dataTemplate.id })
+        setEditMode(false)
+      } else {
+        setData([...data, currentData])
+        localStorage.setItem('data', JSON.stringify([...data, currentData]))
+        setCurrentData({ ...dataTemplate, id: dataTemplate.id + 1 })
+      }
     } else {
       alert('Form Data Is Not Valid!')
     }
+  }
+
+  const editClickHandler = (id) => {
+    setEditMode(true)
+    setCurrentData(data[id])
   }
 
   return (
@@ -161,6 +178,7 @@ const AddInfo = (props) => {
                           <button
                             type="button"
                             className="inline-flex justify-center rounded-md border border-transparent bg-orange-400 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-300 focus:ring-offset-2 m-1"
+                            onClick={() => editClickHandler(item.id)}
                           >
                             Edit
                           </button>

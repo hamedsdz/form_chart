@@ -18,10 +18,9 @@ const AddInfo = () => {
   const dataTemplate = { firstName: '', lastName: '', age: '', skill: SkillsList[0] }
   const [currentData, setCurrentData] = useState(dataTemplate)
 
-  const firstNameChangeHandler = (e) => { setCurrentData({ ...currentData, firstName: e.target.value }) }
-  const lastNameChangeHandler = (e) => { setCurrentData({ ...currentData, lastName: e.target.value }) }
-  const ageChangeHandler = (e) => { setCurrentData({ ...currentData, age: e.target.value }) }
-  const skillChangeHandler = (e) => { setCurrentData({ ...currentData, skill: e.target.value }) }
+  const inputChangeHandler = (e,field) => {
+    setCurrentData({ ...currentData, [field]: e.target.value })
+  }
 
   const submitButtonClickHandler = () => {
     validateData(currentData)
@@ -92,7 +91,7 @@ const AddInfo = () => {
                       id="first-name"
                       autoComplete="first-name"
                       className="mt-1 block w-full bg-slate-200 rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500  py-1 px-2 sm:text-sm"
-                      onChange={(e) => firstNameChangeHandler(e)}
+                      onChange={(e) => inputChangeHandler(e,'firstName')}
                       value={currentData.firstName}
                     />
                   </div>
@@ -107,7 +106,7 @@ const AddInfo = () => {
                       id="last-name"
                       autoComplete="family-name"
                       className="mt-1 block w-full bg-slate-200 rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500  py-1 px-2 sm:text-sm"
-                      onChange={(e) => lastNameChangeHandler(e)}
+                      onChange={(e) => inputChangeHandler(e,'lastName')}
                       value={currentData.lastName}
                     />
                   </div>
@@ -123,7 +122,7 @@ const AddInfo = () => {
                       autoComplete="Age"
                       min={0}
                       className="mt-1 block w-full bg-slate-200 rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500  py-1 px-2 sm:text-sm"
-                      onChange={(e) => ageChangeHandler(e)}
+                      onChange={(e) => inputChangeHandler(e,'age')}
                       value={currentData.age}
                     />
                   </div>
@@ -137,7 +136,7 @@ const AddInfo = () => {
                       name="skills"
                       autoComplete="skills"
                       className="mt-1 block w-full bg-slate-200 rounded-md border border-gray-300 bg-white py-1 px-2 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
-                      onChange={(e) => skillChangeHandler(e)}
+                      onChange={(e) => inputChangeHandler(e,'skill')}
                       value={currentData.skill}
                     >
                       {SkillsList.map((skill, idx) => (<option value={skill} key={idx}>{skill}</option>))}

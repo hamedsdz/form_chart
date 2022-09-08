@@ -3,8 +3,9 @@ import { useState } from 'react';
 // Components
 import DoughnutChart from '../components/DoughnutChart';
 import BarChart from '../components/BarChart'
+import { Link } from 'react-router-dom';
 
-const ShowChart = (props) => {
+const ShowChart = () => {
   const [dataInfo, setDataInfo] = useState(JSON.parse(localStorage.getItem('data')))
 
   return (
@@ -21,13 +22,12 @@ const ShowChart = (props) => {
             </div>}
 
           <div className="my-4 md:px-4 sm:px-0 text-right">
-            <button
-              type="button"
+            <Link
+              to={'/'}
               className="inline-flex justify-center rounded-md border border-transparent bg-rose-400 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-rose-500 focus:outline-none focus:ring-2 focus:ring-rose-300 focus:ring-offset-2"
-              onClick={() => props.changePage(0)}
             >
               Add Info Page
-            </button>
+            </Link>
           </div>
         </div>
       </div>

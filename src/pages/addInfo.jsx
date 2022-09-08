@@ -1,5 +1,6 @@
 import { useState } from 'react'
-const AddInfo = (props) => {
+import { Link } from 'react-router-dom'
+const AddInfo = () => {
 
   const SkillsList = [
     "Data structures and algorithms",
@@ -207,13 +208,12 @@ const AddInfo = (props) => {
             </table>
           </div>
           <div className="my-4 md:px-4 sm:px-0 text-right">
-            <button
-              type="button"
+            <Link
+              to={'/charts'}
               className="inline-flex justify-center rounded-md border border-transparent bg-rose-400 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-rose-500 focus:outline-none focus:ring-2 focus:ring-rose-300 focus:ring-offset-2"
-              onClick={() => props.changePage(1)}
             >
               Show Charts Page
-            </button>
+            </Link>
           </div>
         </div>
       </div>

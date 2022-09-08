@@ -1,8 +1,8 @@
 import { useState } from "react";
 
 // Components
-import DoughnutChart from "../components/DoughnutChart";
-import BarChart from "../components/BarChart";
+import DoughnutChart from "../components/charts/DoughnutChart";
+import BarChart from "../components/charts/BarChart";
 import { Link } from "react-router-dom";
 
 const ShowChart = () => {

@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import CustomSelect from "../components/form/select/customSelect";
 const AddInfo = () => {
-  const SkillsList = [
+  const SkillsListTemplate = [
     "Data structures and algorithms",
     "Database and SQL",
     "Object-oriented programming (OOP) languages",
@@ -22,12 +23,28 @@ const AddInfo = () => {
     firstName: "",
     lastName: "",
     age: "",
-    skill: SkillsList[0],
+    skill: [],
   };
   const [currentData, setCurrentData] = useState(dataTemplate);
 
   const inputChangeHandler = (e, field) => {
     setCurrentData({ ...currentData, [field]: e.target.value });
+  };
+
+  const skillAddHandler = (e) => {
+    setCurrentData({
+      ...currentData,
+      skill: [...currentData.skill, e.target.value],
+    });
+  };
+
+  const skillRemoveHandler = (itemIndex) => {
+    let newData = currentData.skill;
+    newData.splice(itemIndex, 1);
+    setCurrentData({
+      ...currentData,
+      skill: [...newData],
+    });
   };
 
   const submitButtonClickHandler = () => {
@@ -41,7 +58,7 @@ const AddInfo = () => {
       SaveData(false);
     } else if (newData.age === "") {
       SaveData(false);
-    } else if (newData.skill === "") {
+    } else if (newData.skill === []) {
       SaveData(false);
     } else {
       SaveData(true);
@@ -73,7 +90,7 @@ const AddInfo = () => {
   };
 
   const deleteClickHandler = (id) => {
-    let newData = [...data];
+    let newData = data;
     newData.splice(id, 1);
     setData(newData);
     localStorage.setItem("data", JSON.stringify(newData));
@@ -143,26 +160,14 @@ const AddInfo = () => {
                   </div>
 
                   <div className="col-span-6 sm:col-span-3">
-                    <label
-                      htmlFor="skills"
-                      className="block text-sm font-medium text-gray-700"
-                    >
-                      Skills
-                    </label>
-                    <select
-                      id="skills"
-                      name="skills"
-                      autoComplete="skills"
-                      className="mt-1 block w-full bg-slate-200 rounded-md border border-gray-300 bg-white py-1 px-2 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
-                      onChange={(e) => inputChangeHandler(e, "skill")}
-                      value={currentData.skill}
-                    >
-                      {SkillsList.map((skill, idx) => (
-                        <option value={skill} key={idx}>
-                          {skill}
-                        </option>
-                      ))}
-                    </select>
+                    <CustomSelect
+                      templateList={SkillsListTemplate}
+                      addNewHandler={skillAddHandler}
+                      removeItemHandler={skillRemoveHandler}
+                      currentData={currentData.skill}
+                      id={"skills"}
+                      title={"Skills"}
+                    />
                   </div>
                 </div>
               </div>
@@ -199,7 +204,13 @@ const AddInfo = () => {
                           {item.firstName} {item.lastName}
                         </td>
                         <td className="p-2">{item.age}</td>
-                        <td className="p-2">{item.skill}</td>
+                        <td className="p-2">
+                          {item.skill.map((skill) => (
+                            <span className="inline-flex justify-center rounded-md border border-transparent bg-slate-200 py-1 px-1.5 text-sm font-medium text-black shadow-sm focus:outline-none focus:ring-2 hover:bg-slate-300 focus:ring-offset-2 my-2 mr-1">
+                              {skill}
+                            </span>
+                          ))}
+                        </td>
                         <td className="py-2 text-center">
                           <button
                             type="button"

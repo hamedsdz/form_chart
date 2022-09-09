@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import CustomInput from "../components/form/input/customInput";
 import CustomSelect from "../components/form/select/customSelect";
 const AddInfo = () => {
   const SkillsListTemplate = [
@@ -90,7 +91,7 @@ const AddInfo = () => {
   };
 
   const deleteClickHandler = (id) => {
-    let newData = data;
+    let newData = [...data];
     newData.splice(id, 1);
     setData(newData);
     localStorage.setItem("data", JSON.stringify(newData));
@@ -105,57 +106,32 @@ const AddInfo = () => {
               <div className="bg-white px-4 py-5 sm:p-6">
                 <div className="grid grid-cols-6 gap-6">
                   <div className="col-span-6 sm:col-span-3">
-                    <label
-                      htmlFor="first-name"
-                      className="block text-sm font-medium text-gray-700"
-                    >
-                      First name
-                    </label>
-                    <input
-                      type="text"
-                      name="first-name"
-                      id="first-name"
-                      autoComplete="first-name"
-                      className="mt-1 block w-full bg-slate-200 rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500  py-1 px-2 sm:text-sm"
-                      onChange={(e) => inputChangeHandler(e, "firstName")}
-                      value={currentData.firstName}
+                    <CustomInput
+                      inputChangeHandler={inputChangeHandler}
+                      currentData={currentData}
+                      Title={"First name"}
+                      Id={"firstName"}
+                      Type={"text"}
                     />
                   </div>
 
                   <div className="col-span-6 sm:col-span-3">
-                    <label
-                      htmlFor="last-name"
-                      className="block text-sm font-medium text-gray-700"
-                    >
-                      Last name
-                    </label>
-                    <input
-                      type="text"
-                      name="last-name"
-                      id="last-name"
-                      autoComplete="family-name"
-                      className="mt-1 block w-full bg-slate-200 rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500  py-1 px-2 sm:text-sm"
-                      onChange={(e) => inputChangeHandler(e, "lastName")}
-                      value={currentData.lastName}
+                    <CustomInput
+                      inputChangeHandler={inputChangeHandler}
+                      currentData={currentData}
+                      Title={"Last name"}
+                      Id={"lastName"}
+                      Type={"text"}
                     />
                   </div>
 
                   <div className="col-span-6 sm:col-span-3">
-                    <label
-                      htmlFor="age"
-                      className="block text-sm font-medium text-gray-700"
-                    >
-                      Age
-                    </label>
-                    <input
-                      type="number"
-                      name="age"
-                      id="age"
-                      autoComplete="Age"
-                      min={0}
-                      className="mt-1 block w-full bg-slate-200 rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500  py-1 px-2 sm:text-sm"
-                      onChange={(e) => inputChangeHandler(e, "age")}
-                      value={currentData.age}
+                    <CustomInput
+                      inputChangeHandler={inputChangeHandler}
+                      currentData={currentData}
+                      Title={"Age"}
+                      Id={"age"}
+                      Type={"number"}
                     />
                   </div>
 

@@ -9,12 +9,7 @@ import {
 } from "chart.js";
 import { Bar } from "react-chartjs-2";
 // Utils
-import {
-  getUniqueLabel,
-  getLabelCount,
-  getLabels,
-  generateBackgroundColor,
-} from "../../utils/tools";
+import { count, getUniqueLabel, getLabels } from "../../utils/tools";
 
 ChartJS.register(
   CategoryScale,
@@ -26,18 +21,37 @@ ChartJS.register(
 );
 
 const BarChart = ({ dataInfo }) => {
-  const skillLabels = [...getUniqueLabel(getLabels(dataInfo, "skill"))].map(
-    (item) => `${item}`
-  );
+  const getItemsCount = (bigData, dataSet, label) => {
+    return dataSet.map((item) =>
+      count([].concat.apply([], getLabels(bigData, label)), item)
+    );
+  };
+
+  const skillLabels = [
+    ...getUniqueLabel(
+      [].concat.apply([], [...getUniqueLabel(getLabels(dataInfo, "skill"))])
+    ),
+  ].map((item) => `${item}`);
 
   const SkillData = {
     labels: skillLabels,
     datasets: [
       {
         label: "Skills",
-        data: getLabelCount(
+        data: getItemsCount(
           dataInfo,
-          [...getUniqueLabel(getLabels(dataInfo, "skill"))],
+          [
+            ...getUniqueLabel(
+              [].concat.apply(
+                [],
+                [
+                  ...getUniqueLabel(
+                    [].concat.apply([], getLabels(dataInfo, "skill"))
+                  ),
+                ]
+              )
+            ),
+          ],
           "skill"
         ),
         backgroundColor: `rgba(${Math.floor(Math.random() * 200)}, ${Math.floor(

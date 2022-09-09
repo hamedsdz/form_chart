@@ -181,8 +181,11 @@ const AddInfo = () => {
                         </td>
                         <td className="p-2">{item.age}</td>
                         <td className="p-2">
-                          {item.skill.map((skill) => (
-                            <span className="inline-flex justify-center rounded-md border border-transparent bg-slate-200 py-1 px-1.5 text-sm font-medium text-black shadow-sm focus:outline-none focus:ring-2 hover:bg-slate-300 focus:ring-offset-2 my-2 mr-1">
+                          {item.skill.map((skill, idx) => (
+                            <span
+                              className="inline-flex justify-center rounded-md border border-transparent bg-slate-200 py-1 px-1.5 text-sm font-medium text-black shadow-sm focus:outline-none focus:ring-2 hover:bg-slate-300 focus:ring-offset-2 my-2 mr-1"
+                              key={idx}
+                            >
                               {skill}
                             </span>
                           ))}

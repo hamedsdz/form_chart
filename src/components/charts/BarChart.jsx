@@ -75,7 +75,7 @@ const BarChart = ({ dataInfo }) => {
   };
 
   return (
-    <div className="mt-10 py-5 border-t-2 border-zinc-800">
+    <div className="py-5 border-t-2 border-slate-800 max-w-2xl w-full">
       <Bar options={options} data={SkillData} />
     </div>
   );

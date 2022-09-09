@@ -47,7 +47,7 @@ const DoughnutChart = ({ dataInfo }) => {
   };
 
   return (
-    <div className="py-5">
+    <div className="py-5 max-w-xl w-full">
       <Doughnut data={AgeData} options={options} />
     </div>
   );
